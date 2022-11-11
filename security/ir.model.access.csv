@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vm_account_control,vm.account.control,model_vm_account_control,,1,1,1,1
+access_store_operations,store.operations,model_store_operations,,1,1,1,1
+access_local_daily_operations,local.daily.operations,model_local_daily_operations,,1,1,1,1
+access_cash_register_closure,cash.register.closure,model_cash_register_closure,,1,1,1,1
+access_daily_sale_lines,daily.sale.lines,model_daily_sale_lines,,1,1,1,1

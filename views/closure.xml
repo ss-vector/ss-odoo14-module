@@ -1,0 +1,118 @@
+<odoo>
+    <data>
+
+    <!-- explicit list view for daily operations model -->
+
+    <record model="ir.ui.view" id="closure_tree_view">
+      <field name="name">vm_closure.list</field>
+      <field name="model">cash.register.closure</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="reference" string="Código"/>
+            <field name="closure_date" string="Fecha"/>
+            <field name="notes" string="Notas"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- form view of the Cash.Register.Closure model-->
+    <record id="vm_closure_form" model="ir.ui.view" >
+      <field name="name">Formulario de Cierre</field>
+      <field name="model">cash.register.closure</field>
+      <field name="arch" type="xml">
+        <!-- Control de Cierre de Cajas -->
+        <form string="Cierre de Caja">
+            <header>
+                <field name="state" widget="statusbar"/>
+            </header>
+          <sheet>
+            <div class="oe_title">
+              <h1>
+                <span>CIERRE DE CAJA - </span>
+                  <field name="reference" readonly="1"/>
+              </h1>
+            </div>
+            <div class="o_group">
+              <group name="sale_header">
+                  <group>
+                    <field name="closure_date" string="Fecha"/>
+                  </group>
+
+              </group>
+
+            </div>
+              <notebook>
+                  <page string="Cajas">
+
+                  </page>
+                  <!-- Resumen de Operaciones -->
+                  <page string="Operaciones">
+                    <field
+                        name="operation_line"
+                        widget="section_and_note_one2many"
+                        mode="tree,kanban"
+                        string="Operaciones"
+                    >
+                        <form>
+                            <field name="account_id" string="Cuenta"/>
+                            <field name="acc_incomes" string="Ingreso"/>
+                            <field name="acc_outcomes" string="Egreso"/>
+                        </form>
+                    </field>
+                  </page>
+                  <page string="Ferreteria">
+                    <field
+                        name="sale_line"
+                        widget="section_and_note_one2many"
+                        mode="tree,kanban"
+                        string="Ventas"
+                    >
+                        <form>
+
+                        </form>
+                        <tree editable="bottom" string="Daily Product Sales">
+                            <field name="product_id" string="Producto"/>
+                            <field name="name" string="Descripción"/>
+                            <field name="price_unit" string="Precio Unitario"/>
+                            <field name="product_uom_qty" string="Cantidad"/>
+                            <field name="price_subtotal" string="Subtotal"/>
+                        </tree>
+                    </field>
+                    <group name="note_group" col="6" class="mt-2 mt-md-0">
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                <label for="amount_total" />
+                            </div>
+                            <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                    </group>
+                  </page>
+              </notebook>
+              <group string="Notas de Cierre">
+                <field name="notes" nolabel="1"/>
+              </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record id="closure_control_action" model="ir.actions.act_window">
+      <field name="name">Cierre de Caja</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">cash.register.closure</field>
+      <field name="view_mode">tree,kanban,form</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Cree su primer Cierre de Caja..
+        </p>
+      </field>
+    </record>
+
+    <menuitem id="closure_reg_menu"
+              name="Cierre"
+              parent="vm_accounts.operations_menu"
+              action="vm_accounts.closure_control_action"
+              sequence="20"/>
+    </data>
+</odoo>

@@ -1,0 +1,99 @@
+<odoo>
+  <data>
+    <!-- explicit list view for vm_accounts model -->
+
+    <record model="ir.ui.view" id="account_tree_view">
+      <field name="name">vm_control.list</field>
+      <field name="model">vm.account.control</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" string="Cuenta"/>
+          <field name="acc_owner_id" string="Titular"/>
+          <field name="acc_type" string="Tipo"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- form view of the vm_accounts model-->
+    <record id="vm_account_form" model="ir.ui.view" >
+      <field name="name">VM Form</field>
+      <field name="model">vm.account.control</field>
+      <field name="arch" type="xml">
+        <form string="Cuenta">
+          <header>
+
+          </header>
+          <sheet>
+            <div class="oe_title">
+              <group string="Cuenta Local">
+                <field string="Cuenta" name="name"/>
+                <field string="Fecha Creada" name="date_created"/>
+              </group>
+            </div>
+            <div class="o_group">
+              <div class="oe_title">
+                <h3>
+                  <spam>Detalles</spam>
+              </h3>
+              </div>
+
+              <group>
+                <field string="Titular" name="acc_owner_id"/>
+                <field string="Descripción" name="description"/>
+                <field string="Tipo de Cuenta" name="acc_type"/>
+              </group>
+            </div>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record id="main_account_dashboard" model="ir.actions.act_window">
+      <field name="name">Cuentas Locales</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">vm.account.control</field>
+      <field name="view_mode">tree,kanban,form</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Create your first registry...
+        </p>
+      </field>
+    </record>
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="vm_accounts.action_server">
+      <field name="name">vm_accounts server</field>
+      <field name="model_id" ref="model_new_module_new_module"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+
+    <menuitem name="El Triunfo" id="project_menu_root" sequence="10"/>
+
+    <!-- menu categories -->
+
+        <menuitem name="Operaciones" id="vm_accounts.operations_menu" parent="project_menu_root" sequence="20"/>
+
+        <menuitem name="Datos" id="vm_accounts.menu_1" parent="project_menu_root" sequence="10"/>
+
+        <menuitem name="Configuración" id="vm_accounts.configuration_menu" parent="project_menu_root" sequence="30"/>
+
+
+    <!-- actions -->
+
+    <menuitem name="Cuentas" id="account_menu_list" parent="vm_accounts.menu_1"
+              action="main_account_dashboard"/>
+
+  </data>
+</odoo>

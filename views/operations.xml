@@ -1,0 +1,85 @@
+<odoo>
+    <!-- explicit list view for daily operations model -->
+
+    <record model="ir.ui.view" id="vm_accounts.list">
+      <field name="name">vm_operations.list</field>
+      <field name="model">local.daily.operations</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="date" string="Fecha"/>
+          <field name="account_id" string="Cuenta"/>
+          <field name="operation_desc" string="Descripción"/>
+          <field name="acc_incomes" string="Ingresos" widget="monetary"/>
+          <field name="acc_outcomes" string="Egresos" widget="monetary"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- form view of the daily operations model-->
+    <record id="vm_operations_form" model="ir.ui.view" >
+      <field name="name">Formulario de Operaciones</field>
+      <field name="model">local.daily.operations</field>
+      <field name="arch" type="xml">
+        <form string="Registro de Operaciones">
+
+          <sheet>
+            <div class="oe_title">
+              <h1>
+                <!-- Registro de Operaciones -->
+                <field name="account_id" string="Cuenta"/>
+              </h1>
+            </div>
+            <div class="o_group">
+              <group>
+                <field name="date" string="Fecha"/>
+                <field name="operation_desc" string="Descripción"/>
+                <field name="acc_incomes" string="Ingresos"/>
+                <field name="acc_outcomes" string="Egresos"/>
+              </group>
+              <group string="Notas de Operacion">
+                <field name="notes" nolabel="1"/>
+              </group>
+            </div>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record id="main_operations_dashboard" model="ir.actions.act_window">
+      <field name="name">Operaciones</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">local.daily.operations</field>
+      <field name="view_mode">tree,kanban,form</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Create your first registry...
+        </p>
+      </field>
+    </record>
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="vm_accounts.action_server">
+      <field name="name">vm_accounts server</field>
+      <field name="model_id" ref="model_new_module_new_module"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- actions -->
+
+    <menuitem id="operation_reg_menu"
+              name="Registro"
+              parent="vm_accounts.operations_menu"
+              action="main_operations_dashboard"
+              sequence="10"/>
+
+</odoo>
